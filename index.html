@@ -4,115 +4,152 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pulse Modulation Simulator — Project Submission</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            'primary': '#4f46e5', // Indigo 600
+            'accent': '#1e293b',  // Slate 800
+            'bg-light': '#f8fafc', // Slate 50
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    .hero-shadow { box-shadow: 0 10px 30px rgba(15,23,42,0.08); }
-    .btn-xl { padding: .85rem 1.25rem; font-weight:700; border-radius:.6rem; }
-    .border-card { border:1px solid #dbe1ea; }
+    /* Custom Shadows for Depth */
+    .hero-shadow { box-shadow: 0 15px 40px rgba(79, 70, 229, 0.1), 0 5px 15px rgba(0,0,0,0.05); }
+    /* Primary button styling */
+    .btn-primary { 
+        padding: .9rem 1.8rem; 
+        font-weight:700; 
+        border-radius:.75rem; 
+        transition: all 0.3s ease; 
+        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(79, 70, 229, 0.6);
+    }
+    /* Subtle border for sections */
+    .section-card { border: 1px solid #e2e8f0; } 
+    /* Cleaner list styling */
+    .feature-list li { margin-bottom: 0.5rem; }
   </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-bg-light text-slate-900 font-sans">
 
-  <!-- HEADER / COLLEGE INFO -->
-  <header class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-slate-200 text-center">
-    <h1 class="text-2xl font-bold">Kirori Mal College</h1>
-    <h2 class="text-lg text-slate-700 font-medium">Department of Physics</h2>
-    <p class="mt-1 text-sm text-slate-600">University of Delhi</p>
+  <header class="max-w-4xl mx-auto mt-12 p-8 bg-white rounded-2xl shadow-lg section-card text-center">
+    <div class="space-y-1">
+        <h1 class="text-3xl font-extrabold text-accent tracking-tight">Kirori Mal College</h1>
+        <h2 class="text-xl text-slate-600 font-semibold">Department of Physics</h2>
+        <p class="mt-2 text-sm text-slate-500">University of Delhi</p>
+    </div>
   </header>
 
   <main class="max-w-4xl mx-auto p-6">
 
-    <!-- PROJECT TITLE BOX -->
-    <section class="bg-white mt-8 p-6 rounded-xl shadow-md border border-slate-200 text-center hero-shadow">
-      <h2 class="text-3xl font-extrabold text-slate-900">Pulse Modulation Simulator</h2>
-      <p class="text-slate-700 text-lg mt-2">A Web-Based Demonstration of PAM, PWM & PPM</p>
+    <section class="bg-white mt-10 p-10 rounded-2xl shadow-xl hero-shadow text-center">
+      <h2 class="text-4xl font-extrabold text-accent tracking-tighter">Pulse Modulation Simulator</h2>
+      <p class="text-slate-600 text-xl mt-3 font-medium">A Web-Based Demonstration of PAM, PWM & PPM</p>
 
       <a href="simulator.html" 
-        class="btn-xl bg-indigo-600 text-white hover:bg-indigo-700 inline-block mt-6 text-lg">
-        ▶ Open Simulator
+        class="btn-primary bg-primary text-white hover:bg-indigo-700 inline-block mt-8 text-lg">
+        ▶ Launch Simulator
       </a>
     </section>
 
-    <!-- ABSTRACT -->
-    <section class="bg-white mt-8 p-6 rounded-xl shadow-md border border-slate-200">
-      <h3 class="text-xl font-semibold mb-2">Abstract</h3>
-      <p class="text-slate-700 leading-6">
-        This project demonstrates Pulse Amplitude Modulation (PAM), Pulse Width Modulation (PWM)
-        and Pulse Position Modulation (PPM) using an interactive web-based simulator. Users can
-        vary signal amplitude, sampling frequency and waveform type. The tool also visualizes 
-        demodulation to help students understand the reconstruction of analog signals from 
-        pulse-modulated forms. This simulator provides a modern, browser-powered alternative 
-        to hardware communication trainer kits.
-      </p>
-    </section>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
 
-    <!-- AIM -->
-    <section class="bg-white mt-6 p-6 rounded-xl shadow-md border border-slate-200">
-      <h3 class="text-xl font-semibold mb-2">Aim</h3>
-      <p class="text-slate-700 leading-6">
-        To study and visualize Pulse Amplitude Modulation (PAM), Pulse Width Modulation (PWM) 
-        and Pulse Position Modulation (PPM) using a custom-built web-based simulation tool.
-      </p>
-    </section>
+      <section class="bg-white p-6 rounded-xl shadow section-card lg:col-span-1">
+        <h3 class="text-xl font-bold mb-3 border-b pb-2 text-primary">🎯 Aim</h3>
+        <p class="text-slate-700 leading-relaxed text-base">
+          To study and visualize Pulse Amplitude Modulation (PAM), Pulse Width Modulation (PWM) 
+          and Pulse Position Modulation (PPM) using a custom-built web-based simulation tool.
+        </p>
+      </section>
 
-    <!-- TEAM SECTION -->
-    <section class="bg-white mt-8 p-6 rounded-xl shadow-md border border-slate-200">
-      <h3 class="text-xl font-semibold text-slate-900 mb-4 text-center">Project Team</h3>
+      <section class="bg-white p-6 rounded-xl shadow section-card lg:col-span-2">
+        <h3 class="text-xl font-bold mb-3 border-b pb-2 text-primary">📚 Course Information</h3>
+        <div class="grid grid-cols-2 gap-y-2 text-slate-700">
+            <p><strong class="font-semibold">Course:</strong> B.Sc (Hons) Physics</p>
+            <p><strong class="font-semibold">Year:</strong> 3rd Year</p>
+            <p><strong class="font-semibold">Subject:</strong> Communication System</p>
+            <p><strong class="font-semibold">Academic Year:</strong> 2025–26</p>
+            <p class="col-span-2"><strong class="font-semibold">Submitted to:</strong> __________________________</p>
+        </div>
+      </section>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    </div>
 
-        <div class="p-4 rounded-lg bg-slate-100 border-card">
-          <p class="font-bold text-slate-900">Rohit Singh</p>
-          <p class="text-sm text-slate-600">Role: Developer</p>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+
+        <section class="bg-white p-6 rounded-xl shadow section-card">
+            <h3 class="text-xl font-bold mb-3 border-b pb-2 text-primary">📝 Abstract</h3>
+            <p class="text-slate-700 leading-relaxed text-base">
+              This project demonstrates Pulse Amplitude Modulation (PAM), Pulse Width Modulation (PWM)
+              and Pulse Position Modulation (PPM) using an interactive web-based simulator. Users can
+              vary signal amplitude, sampling frequency, and waveform type. The tool also visualizes 
+              demodulation to help students understand the reconstruction of analog signals from 
+              pulse-modulated forms. This simulator provides a modern, browser-powered alternative 
+              to traditional hardware communication trainer kits.
+            </p>
+        </section>
+
+        <section class="bg-white p-6 rounded-xl shadow section-card">
+            <h3 class="text-xl font-bold mb-3 border-b pb-2 text-primary">✨ Key Features</h3>
+            <ul class="feature-list list-disc pl-5 text-slate-700 space-y-1">
+              <li>Visualizes **PAM, PWM, and PPM** in real time.</li>
+              <li>Adjustable **amplitude, waveform type, analog frequency, and sampling frequency**.</li>
+              <li>Dedicated **Demodulation mode** to view recovered waveform.</li>
+              <li>Supports sine, square and triangle input waveforms.</li>
+              <li>Fully browser-based — accessible on phone, laptop, and tablet.</li>
+            </ul>
+        </section>
+
+    </div>
+
+
+    <section class="bg-white mt-8 p-6 rounded-xl shadow-lg section-card">
+      <h3 class="text-xl font-bold text-accent mb-5 text-center border-b pb-2">👥 Project Team</h3>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+
+        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 hover:bg-indigo-50 transition duration-300">
+          <p class="font-bold text-accent text-lg">Rohit Singh</p>
+          <p class="text-sm text-slate-600">Developer</p>
         </div>
 
-        <div class="p-4 rounded-lg bg-slate-100 border-card">
-          <p class="font-bold text-slate-900">Roshan</p>
-          <p class="text-sm text-slate-600">Role: Contributor</p>
+        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 hover:bg-indigo-50 transition duration-300">
+          <p class="font-bold text-accent text-lg">Roshan</p>
+          <p class="text-sm text-slate-600">Contributor</p>
         </div>
 
-        <div class="p-4 rounded-lg bg-slate-100 border-card">
-          <p class="font-bold text-slate-900">Piyush</p>
-          <p class="text-sm text-slate-600">Role: Documentation</p>
+        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 hover:bg-indigo-50 transition duration-300">
+          <p class="font-bold text-accent text-lg">Piyush</p>
+          <p class="text-sm text-slate-600">Documentation</p>
         </div>
 
-        <div class="p-4 rounded-lg bg-slate-100 border-card">
-          <p class="font-bold text-slate-900">Rahul</p>
-          <p class="text-sm text-slate-600">Role: Testing</p>
+        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200 hover:bg-indigo-50 transition duration-300">
+          <p class="font-bold text-accent text-lg">Rahul</p>
+          <p class="text-sm text-slate-600">Testing</p>
         </div>
 
       </div>
     </section>
 
-    <!-- FEATURES -->
-    <section class="bg-white mt-8 p-6 rounded-xl shadow-md border border-slate-200">
-      <h3 class="text-xl font-semibold mb-2">Features</h3>
 
-      <ul class="list-disc pl-6 text-slate-700 space-y-1">
-        <li>Visualizes PAM, PWM and PPM in real time.</li>
-        <li>Adjustable amplitude, waveform type, analog frequency and sampling frequency.</li>
-        <li>Demodulation mode to view recovered waveform.</li>
-        <li>Supports sine, square and triangle input waveforms.</li>
-        <li>Fully browser-based — works on phone, laptop and tablet.</li>
-      </ul>
-    </section>
-
-    <!-- COURSE DETAILS -->
-    <section class="bg-white mt-8 p-6 rounded-xl shadow-md border border-slate-200">
-      <h3 class="text-xl font-semibold mb-3">Course Information</h3>
-
-      <p class="text-slate-700"><strong>Course:</strong> B.Sc (Hons) Physics</p>
-      <p class="text-slate-700"><strong>Year:</strong> 3rd Year</p>
-      <p class="text-slate-700"><strong>Subject:</strong> Communication System</p>
-      <p class="text-slate-700"><strong>Submitted to:</strong> __________________________</p>
-      <p class="text-slate-700"><strong>Academic Year:</strong> 2025–26</p>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="mt-12 mb-8 text-center text-sm text-slate-500">
-      Designed & Developed by Rohit Singh
+    <footer class="mt-16 mb-8 text-center text-sm text-slate-500 border-t pt-4">
+      Designed & Developed by Rohit Singh. All Rights Reserved.
     </footer>
 
   </main>
