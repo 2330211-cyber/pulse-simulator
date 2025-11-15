@@ -3,144 +3,119 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pulse Simulator — Home</title>
+  <title>Pulse Modulation Simulator — Project Submission</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
     .hero-shadow { box-shadow: 0 10px 30px rgba(15,23,42,0.08); }
     .btn-xl { padding: .85rem 1.25rem; font-weight:700; border-radius:.6rem; }
+    .border-card { border:1px solid #dbe1ea; }
   </style>
 </head>
 
 <body class="bg-slate-50 text-slate-900">
 
-  <!-- HEADER -->
-  <header class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-md bg-gradient-to-br from-indigo-500 to-pink-500 
-                  flex items-center justify-center text-white font-bold">PS</div>
-      <div>
-        <h1 class="text-lg font-semibold">Pulse Simulator</h1>
-        <p class="text-sm text-slate-500">PAM, PWM & PPM visual simulator</p>
-      </div>
-    </div>
-    <nav class="flex items-center gap-3">
-
-      <a href="simulator.html" 
-         class="px-3 py-2 text-sm bg-white border border-slate-200 rounded-md shadow-sm hover:bg-slate-50">
-        Open Simulator
-      </a>
-    </nav>
+  <!-- HEADER / COLLEGE INFO -->
+  <header class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-slate-200 text-center">
+    <h1 class="text-2xl font-bold">Kirori Mal College</h1>
+    <h2 class="text-lg text-slate-700 font-medium">Department of Physics</h2>
+    <p class="mt-1 text-sm text-slate-600">University of Delhi</p>
   </header>
 
-  <main class="max-w-6xl mx-auto px-6">
+  <main class="max-w-4xl mx-auto p-6">
 
-    <!-- HERO SECTION -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white 
-                    p-8 rounded-2xl hero-shadow">
+    <!-- PROJECT TITLE BOX -->
+    <section class="bg-white mt-8 p-6 rounded-xl shadow-md border border-slate-200 text-center hero-shadow">
+      <h2 class="text-3xl font-extrabold text-slate-900">Pulse Modulation Simulator</h2>
+      <p class="text-slate-700 text-lg mt-2">A Web-Based Demonstration of PAM, PWM & PPM</p>
 
-      <div>
-        <h2 class="text-3xl font-extrabold mb-3">
-          Interactive Pulse Modulation Simulator
-        </h2>
-
-        <p class="text-slate-600 mb-6">
-          Visualize and experiment with PAM, PWM and PPM. Adjust amplitude, sampling 
-          frequency, waveform type and see the recovered signal — all in your browser.
-        </p>
-
-        <div class="flex gap-3">
-          <a href="simulator.html" 
-             class="btn-xl bg-indigo-600 text-white hover:bg-indigo-700 inline-flex items-center gap-3">
-            ▶ Open Simulator
-          </a>
-
-          <a href="https://github.com/2330211-cyber/pulse-simulator" target="_blank"
-             class="btn-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 
-                    inline-flex items-center gap-2">
-            GitHub Repo
-          </a>
-        </div>
-
-        <div class="mt-6 text-sm text-slate-500">
-          <strong>Tip:</strong> Toggle "Demodulation" to view signal recovery.
-        </div>
-      </div>
-
-      <div>
-        <div class="w-full h-56 bg-gradient-to-br from-slate-100 to-white rounded-xl 
-                    border border-slate-100 overflow-hidden shadow-inner">
-          <iframe src="simulator.html" style="width:100%;height:100%;border:0" loading="lazy"></iframe>
-        </div>
-        <p class="text-xs text-slate-400 mt-2">Live preview (if supported). Otherwise click Open Simulator.</p>
-      </div>
-
+      <a href="simulator.html" 
+        class="btn-xl bg-indigo-600 text-white hover:bg-indigo-700 inline-block mt-6 text-lg">
+        ▶ Open Simulator
+      </a>
     </section>
 
-    <!-- FEATURES SECTION -->
-    <section class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-      <article class="bg-white p-4 rounded-xl shadow-sm">
-        <h3 class="font-semibold">Modes</h3>
-        <p class="text-sm text-slate-600 mt-2">Supports PAM, PWM & PPM modulation.</p>
-      </article>
+    <!-- ABSTRACT -->
+    <section class="bg-white mt-8 p-6 rounded-xl shadow-md border border-slate-200">
+      <h3 class="text-xl font-semibold mb-2">Abstract</h3>
+      <p class="text-slate-700 leading-6">
+        This project demonstrates Pulse Amplitude Modulation (PAM), Pulse Width Modulation (PWM)
+        and Pulse Position Modulation (PPM) using an interactive web-based simulator. Users can
+        vary signal amplitude, sampling frequency and waveform type. The tool also visualizes 
+        demodulation to help students understand the reconstruction of analog signals from 
+        pulse-modulated forms. This simulator provides a modern, browser-powered alternative 
+        to hardware communication trainer kits.
+      </p>
+    </section>
 
-      <article class="bg-white p-4 rounded-xl shadow-sm">
-        <h3 class="font-semibold">Controls</h3>
-        <p class="text-sm text-slate-600 mt-2">Adjust amplitude, sampling frequency & waveform type.</p>
-      </article>
-
-      <article class="bg-white p-4 rounded-xl shadow-sm">
-        <h3 class="font-semibold">For Teachers</h3>
-        <p class="text-sm text-slate-600 mt-2">Great for digital communication labs & demos.</p>
-      </article>
+    <!-- AIM -->
+    <section class="bg-white mt-6 p-6 rounded-xl shadow-md border border-slate-200">
+      <h3 class="text-xl font-semibold mb-2">Aim</h3>
+      <p class="text-slate-700 leading-6">
+        To study and visualize Pulse Amplitude Modulation (PAM), Pulse Width Modulation (PWM) 
+        and Pulse Position Modulation (PPM) using a custom-built web-based simulation tool.
+      </p>
     </section>
 
     <!-- TEAM SECTION -->
-    <section class="mt-10 bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-      <h3 class="text-xl font-semibold text-center mb-6 text-slate-800">Project Team</h3>
+    <section class="bg-white mt-8 p-6 rounded-xl shadow-md border border-slate-200">
+      <h3 class="text-xl font-semibold text-slate-900 mb-4 text-center">Project Team</h3>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-        <div class="p-4 rounded-lg bg-slate-100 border border-slate-200">
-          <p class="font-semibold text-slate-900">1. Rohit Singh</p>
-          <p class="text-sm text-slate-600 mt-1">Role: Developer</p>
+        <div class="p-4 rounded-lg bg-slate-100 border-card">
+          <p class="font-bold text-slate-900">Rohit Singh</p>
+          <p class="text-sm text-slate-600">Role: Developer</p>
         </div>
 
-        <div class="p-4 rounded-lg bg-slate-100 border border-slate-200">
-          <p class="font-semibold text-slate-900">2. Roshan</p>
-          <p class="text-sm text-slate-600 mt-1">Role: Contributor</p>
+        <div class="p-4 rounded-lg bg-slate-100 border-card">
+          <p class="font-bold text-slate-900">Roshan</p>
+          <p class="text-sm text-slate-600">Role: Contributor</p>
         </div>
 
-        <div class="p-4 rounded-lg bg-slate-100 border border-slate-200">
-          <p class="font-semibold text-slate-900">3. Piyush</p>
-          <p class="text-sm text-slate-600 mt-1">Role: Documentation</p>
+        <div class="p-4 rounded-lg bg-slate-100 border-card">
+          <p class="font-bold text-slate-900">Piyush</p>
+          <p class="text-sm text-slate-600">Role: Documentation</p>
         </div>
 
-        <div class="p-4 rounded-lg bg-slate-100 border border-slate-200">
-          <p class="font-semibold text-slate-900">4. Rahul</p>
-          <p class="text-sm text-slate-600 mt-1">Role: Testing</p>
+        <div class="p-4 rounded-lg bg-slate-100 border-card">
+          <p class="font-bold text-slate-900">Rahul</p>
+          <p class="text-sm text-slate-600">Role: Testing</p>
         </div>
 
       </div>
     </section>
 
-    <!-- QUICK USAGE -->
-    <section class="mt-8 p-6 rounded-xl bg-indigo-50 border border-indigo-100">
-      <h4 class="font-semibold mb-2">Quick Usage</h4>
-      <ol class="text-sm text-slate-600 list-decimal pl-5 space-y-1">
-        <li>Open the simulator.</li>
-        <li>Select waveform and modulation mode.</li>
-        <li>Enable demodulation to compare signals.</li>
-      </ol>
+    <!-- FEATURES -->
+    <section class="bg-white mt-8 p-6 rounded-xl shadow-md border border-slate-200">
+      <h3 class="text-xl font-semibold mb-2">Features</h3>
+
+      <ul class="list-disc pl-6 text-slate-700 space-y-1">
+        <li>Visualizes PAM, PWM and PPM in real time.</li>
+        <li>Adjustable amplitude, waveform type, analog frequency and sampling frequency.</li>
+        <li>Demodulation mode to view recovered waveform.</li>
+        <li>Supports sine, square and triangle input waveforms.</li>
+        <li>Fully browser-based — works on phone, laptop and tablet.</li>
+      </ul>
+    </section>
+
+    <!-- COURSE DETAILS -->
+    <section class="bg-white mt-8 p-6 rounded-xl shadow-md border border-slate-200">
+      <h3 class="text-xl font-semibold mb-3">Course Information</h3>
+
+      <p class="text-slate-700"><strong>Course:</strong> B.Sc (Hons) Physics</p>
+      <p class="text-slate-700"><strong>Year:</strong> 3rd Year</p>
+      <p class="text-slate-700"><strong>Subject:</strong> Communication System</p>
+      <p class="text-slate-700"><strong>Submitted to:</strong> __________________________</p>
+      <p class="text-slate-700"><strong>Academic Year:</strong> 2025–26</p>
     </section>
 
     <!-- FOOTER -->
-    <footer class="mt-8 mb-12 text-center text-sm text-slate-500">
-      Made with ♥ by Rohit — 
-      <a href="https://github.com/2330211-cyber/pulse-simulator" 
-         class="text-slate-600 hover:underline" target="_blank">GitHub Repo</a>
+    <footer class="mt-12 mb-8 text-center text-sm text-slate-500">
+      Designed & Developed by Rohit Singh
     </footer>
 
   </main>
+
 </body>
 </html>
-
