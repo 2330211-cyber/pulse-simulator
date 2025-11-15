@@ -10,7 +10,6 @@
             --input-color: #1f77b4; /* Blue - Original Signal */
             --modulation-color: #f97316; /* Orange */
             --demodulation-color: #10b981; /* Green - Recovered Signal */
-            --pcm-color: #2ca02c; /* Darker Green */
             --pam-color: #dc2626; /* Red */
             --bg-color: #f3f4f6;
             --box-bg: #ffffff;
@@ -86,7 +85,7 @@
 
     <div class="max-w-7xl mx-auto bg-white rounded-xl shadow-2xl p-6 md:p-10">
         <h1 class="text-3xl font-extrabold text-gray-900 mb-8 text-center border-b pb-4">
-            Pulse Modulation Simulator
+            Pulse Modulation Simulator (PAM, PWM, PPM)
         </h1>
         
         <!-- Main Layout: Graphs (Left) and Controls (Right) --><div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -96,13 +95,13 @@
                 <!-- Graph 1: Input Signal --><div class="panel-box">
                     <p class="canvas-title">Graph 1: Input Message Signal</p>
                     <canvas id="canvasInput" class="w-full h-64"></canvas>
-                    <p class="text-xs text-gray-500 text-center mt-2">Bipolar Signal (Blue Line) - Fixed Y-Axis: $\pm 3.0$ V</p>
+                    <p class="text-xs text-gray-500 text-center mt-2"><!-- Removed text --></p>
                 </div>
 
                 <!-- Graph 2: Modulated/Demodulated Output --><div class="panel-box">
                     <p class="canvas-title" id="outputGraphTitle">Graph 2: PAM Output Signal</p>
                     <canvas id="canvasOutput" class="w-full h-64"></canvas>
-                    <p class="text-xs text-gray-500 text-center mt-2">Modulated Pulse Train vs. Recovered Signal (Green Dashed)</p>
+                    <p class="text-xs text-gray-500 text-center mt-2">Pulse modulation output visualization.</p>
                 </div>
             </div>
 
@@ -114,7 +113,7 @@
                         <button data-mode="PAM" class="mode-btn bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg transition hover:bg-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-300">PAM</button>
                         <button data-mode="PWM" class="mode-btn bg-white text-indigo-700 border border-indigo-300 font-semibold py-2 px-4 rounded-lg transition hover:bg-indigo-100 focus:outline-none focus:ring-4 focus:ring-indigo-300">PWM</button>
                         <button data-mode="PPM" class="mode-btn bg-white text-indigo-700 border border-indigo-300 font-semibold py-2 px-4 rounded-lg transition hover:bg-indigo-100 focus:outline-none focus:ring-4 focus:ring-indigo-300">PPM</button>
-                        <button data-mode="PCM" class="mode-btn bg-white text-indigo-700 border border-indigo-300 font-semibold py-2 px-4 rounded-lg transition hover:bg-indigo-100 focus:outline-none focus:ring-4 focus:ring-indigo-300">PCM</button>
+                        <!-- PCM button removed -->
                     </div>
                 </div>
 
@@ -128,7 +127,7 @@
 
                     <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 pt-4">Output Control</h3>
                     <div class="flex items-center justify-between">
-                        <label for="demodulateSwitch" class="control-label text-base m-0">Show Demodulation (LPF)</label>
+                        <label for="demodulateSwitch" class="control-label text-base m-0">Demodulation</label>
                         
                         <!-- RE-IMPLEMENTED SWITCH STRUCTURE -->
                         <label class="toggle-control">
@@ -157,10 +156,9 @@
                         <p id="nyquistWarning" class="text-sm text-red-500 mt-1 hidden">Warning: Fs is close to the Nyquist rate!</p>
                     </div>
 
-                    <!-- PCM Bits --><div id="pcmBitsControl">
-                        <label for="numBits" class="control-label">PCM Quantization Bits (<span id="numBitsValue">4</span> bits)</label>
-                        <input type="range" id="numBits" min="2" max="8" step="1" value="4" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg">
-                        <p class="text-sm text-gray-500 mt-1">SQNR: <span id="sqnrValue">25.84</span> dB</p>
+                    <!-- PCM Bits control removed -->
+                    <div id="pcmBitsControl" style="display:none;">
+                        <!-- Retained placeholder div for safe JS interaction removal -->
                     </div>
                 </div>
             </div>
@@ -181,14 +179,14 @@
         let A_ANALOG = 1.0;
         let F_ANALOG = 2.0;
         let FS_SAMPLES = 50;
-        let NUM_BITS = 4;
+        // NUM_BITS removed
         let funcType = 'SINE';
         
         // Color variables for drawing
         const INPUT_COLOR = '#1f77b4'; 
         const MODULATION_COLOR = '#f97316';
         const PAM_COLOR = '#dc2626'; 
-        const PCM_COLOR = '#2ca02c'; 
+        // PCM_COLOR removed
         const DEMODULATION_COLOR = '#10b981';
 
         // --- Utility Functions (JS equivalent of NumPy/SciPy) ---
@@ -290,40 +288,24 @@
             return { signal: ppmSignal, time: tPpm, title: "Pulse Position Modulation (PPM)", modColor: MODULATION_COLOR };
         }
 
-        function simulatePCM(analogSamples, tSamples) {
-            const L_LEVELS = 2 ** NUM_BITS;
-            const voltageRange = 2 * A_ANALOG;
-            const stepSize = voltageRange / L_LEVELS;
-
-            const quantizedIndex = analogSamples.map(sample => {
-                const normalized = (A_ANALOG + sample) / stepSize;
-                let index = Math.round(normalized);
-                index = Math.max(0, Math.min(L_LEVELS - 1, index));
-                return index;
-            });
-
-            const quantizedSignal = quantizedIndex.map(index => (index * stepSize) - A_ANALOG);
-            
-            const sqnrDb = 6.02 * NUM_BITS + 1.76;
-            const title = `Pulse Code Modulation (PCM) (SQNR $\\approx ${sqnrDb.toFixed(2)}$ dB)`;
-
-            document.getElementById('sqnrValue').textContent = sqnrDb.toFixed(2);
-
-            return { signal: quantizedSignal, title: title, modColor: PCM_COLOR };
-        }
+        /* simulatePCM removed */
 
         // --- Demodulation Logic (Reconstruction Filter Approximation) ---
 
-        function getDemodulatedSignal(modSignal, tMod, mode, A_ANALOG, tSamples) { // ADD tSamples here
+        function getDemodulatedSignal(modSignal, tMod, mode, A_ANALOG, tSamples) { 
             let dataPoints;
             let timePoints;
             
             // Determine the discrete data points used for LPF interpolation
-            if (mode === 'PAM' || mode === 'PCM') {
+            if (mode === 'PAM') { // PCM case removed
                 dataPoints = modSignal; 
                 timePoints = tSamples;
             } else if (mode === 'PWM' || mode === 'PPM') {
                 // For PWM/PPM, we use the original samples as the target for ideal demodulation
+                dataPoints = generateMessageSignal(tSamples, A_ANALOG, F_ANALOG, funcType);
+                timePoints = tSamples;
+            } else {
+                // Fallback for missing mode (should not happen if buttons are correct)
                 dataPoints = generateMessageSignal(tSamples, A_ANALOG, F_ANALOG, funcType);
                 timePoints = tSamples;
             }
@@ -388,6 +370,12 @@
             const absoluteMaxAmp = MAX_PLOT_VOLTAGE; 
             let isUnipolar = (mode === 'PWM' || mode === 'PPM') && isOutput;
 
+            // --- FIX: Force Bipolar axis if Demodulation is ON, regardless of pulse type ---
+            if (isOutput && demodulationEnabled) {
+                isUnipolar = false;
+            }
+            // ---------------------------------------------------------------------------------
+
             // --- IMPORTANT: Reset line dash state here! ---
             ctx.setLineDash([]);
 
@@ -408,42 +396,71 @@
             const scaleX = plotAreaWidth / T_STOP;
             
             // ScaleY (Pixels per Volt). Fixed based on MAX_PLOT_VOLTAGE (3.0V).
-            const scaleYRange = isUnipolar ? absoluteMaxAmp : 2 * absoluteMaxAmp;
+            const scaleYRange = 2 * absoluteMaxAmp; // Fixed bipolar range for all graphs 
             const scaleY = plotAreaHeight / scaleYRange;
             
             const translateY = (y_val) => {
-                 if (isUnipolar) {
-                    // Unipolar: Map [0, MAX_PLOT_VOLTAGE] to [zeroY, padding]
-                    return zeroY - (y_val * scaleY); 
-                 } else {
-                    // Bipolar: Map [-MAX_PLOT_VOLTAGE, MAX_PLOT_VOLTAGE] to [height-padding, padding]
-                    return zeroY - (y_val * scaleY);
-                 }
+                 // Map [-MAX_PLOT_VOLTAGE, MAX_PLOT_VOLTAGE] to [height-padding, padding]
+                 return zeroY - (y_val * scaleY);
             };
             
             const translateX = (t_val) => padding + t_val * scaleX;
+            
+            // 2. Draw Y-axis Grid Lines and Labels
+            ctx.font = '10px Inter';
+            ctx.fillStyle = '#6b7280';
+            ctx.textAlign = 'right';
 
-            // --- 3. Draw Main Signal (Pulse Train) ---
-            if (!isOutput || !demodulationEnabled || mode !== 'PAM') {
-                let color = isOutput ? MODULATION_COLOR : INPUT_COLOR;
-                if (mode === 'PAM' && isOutput) color = PAM_COLOR;
-                if (mode === 'PCM' && isOutput) color = PCM_COLOR;
+            // Iterate over tick values
+            const tickInterval = 1.0; // Every 1V
+            const tickMax = Math.ceil(absoluteMaxAmp / tickInterval) * tickInterval;
+
+            for (let v = -tickMax; v <= tickMax; v += tickInterval) {
+                const yPixel = translateY(v);
+                
+                // Only draw ticks visible within the Y plot area
+                if (yPixel >= padding && yPixel <= height - padding) {
+                    const lineAlpha = (v === 0) ? 0.6 : 0.2;
+                    const gridColor = `rgba(150, 150, 150, ${lineAlpha})`;
+                    
+                    // Draw horizontal grid line
+                    drawLine(ctx, padding, yPixel, width - padding, yPixel, gridColor, 1);
+                    
+                    // Draw label (only label if it's not the center axis or if we need labels for unipolar)
+                    if (isUnipolar || v !== 0) {
+                         ctx.fillText(v.toFixed(0) + ' V', padding - 5, yPixel + 3);
+                    }
+                }
+            }
+            ctx.textAlign = 'left'; 
+
+
+            // --- 3. Draw Main Signals ---
+            
+            // 3a. Draw Input Signal (ONLY on Graph 1)
+            if (!isOutput) {
+                ctx.strokeStyle = INPUT_COLOR;
+                ctx.lineWidth = 2; 
+                
+                ctx.beginPath();
+                ctx.moveTo(translateX(tContinuous[0]), translateY(continuousSignal[0]));
+                for (let i = 1; i < tContinuous.length; i++) {
+                    ctx.lineTo(translateX(tContinuous[i]), translateY(continuousSignal[i]));
+                }
+                ctx.stroke();
+            }
+
+            // 3b. Draw Modulated Pulse Train (ONLY on Graph 2 if Demodulation is OFF)
+            if (isOutput && !demodulationEnabled) {
+                // Set styles based on modulation mode
+                let color = MODULATION_COLOR;
+                if (mode === 'PAM') color = PAM_COLOR;
+                // PCM removed
                 
                 ctx.strokeStyle = color;
-                ctx.lineWidth = isOutput && (mode === 'PAM' || mode === 'PCM') ? 3 : 2; 
+                ctx.lineWidth = 3;
                 
-                const currentSignal = isOutput ? signal : continuousSignal;
-                const currentTime = isOutput ? t : tContinuous;
-                
-                if (!isOutput) {
-                    // Draw Input Signal (Graph 1)
-                    ctx.beginPath();
-                    ctx.moveTo(translateX(currentTime[0]), translateY(currentSignal[0]));
-                    for (let i = 1; i < currentTime.length; i++) {
-                        ctx.lineTo(translateX(currentTime[i]), translateY(currentSignal[i]));
-                    }
-                    ctx.stroke();
-                } else if (mode === 'PAM') {
+                if (mode === 'PAM') {
                     // --- DRAW BIPOLAR PAM PULSES ---
                     ctx.fillStyle = PAM_COLOR;
                     const pulseWidth = (1 / FS_SAMPLES) * 0.3; 
@@ -468,29 +485,30 @@
                         }
                         ctx.fillRect(x_start, rectY, pulseWidthPx, rectHeight);
                     });
-                } else if (mode === 'PCM') {
-                    // Draw PCM Step Plot (Staircase)
-                    ctx.strokeStyle = PCM_COLOR;
-                    for (let i = 0; i < t.length - 1; i++) {
-                        const x1 = translateX(t[i]);
-                        const y = translateY(signal[i]);
-                        const x2 = translateX(t[i+1]);
-                        drawLine(ctx, x1, y, x2, y, PCM_COLOR, 3); // Horizontal step
-                        
-                        const nextY = translateY(signal[i+1]);
-                        if (y !== nextY) {
-                            drawLine(ctx, x2, y, x2, nextY, PCM_COLOR, 3); // Vertical transition
-                        }
-                    }
                 } else { // PWM and PPM (Output Plot)
-                    // --- DRAW PULSE TRAIN (ORANGE LINE PLOT) ---
+                    // --- DRAW PWM/PPM AS SQUARE WAVE (Staircase Plot) ---
                     ctx.strokeStyle = MODULATION_COLOR;
-                    ctx.lineWidth = 3; // Thicker line for pulse train
+                    ctx.lineWidth = 3; 
 
                     ctx.beginPath();
-                    ctx.moveTo(translateX(t[0]), translateY(signal[0]));
+                    let currentX = translateX(t[0]);
+                    let currentY = translateY(signal[0]);
+                    ctx.moveTo(currentX, currentY);
+
+                    // Iterate over high-resolution points for accurate square wave representation
                     for (let i = 1; i < t.length; i++) {
-                        ctx.lineTo(translateX(t[i]), translateY(signal[i]));
+                        const nextX = translateX(t[i]);
+                        const nextY = translateY(signal[i]);
+
+                        // Vertical transition: Draw segment from current time to next amplitude
+                        if (nextY !== currentY) {
+                            ctx.lineTo(currentX, nextY);
+                        }
+                        // Horizontal segment: Draw segment from current time/new vertical position to next time
+                        ctx.lineTo(nextX, nextY);
+                        
+                        currentX = nextX;
+                        currentY = nextY;
                     }
                     ctx.stroke();
                 }
@@ -500,12 +518,14 @@
             // --- 4. Draw Demodulated Signal (Graph 2 only, if enabled) ---
             if (isOutput && demodulationEnabled && demodSignal && tDemod) {
                 // Draw the discrete samples that the LPF interpolates between (small dots)
-                if (mode === 'PAM' || mode === 'PCM') {
+                if (mode === 'PAM') { // PCM removed
                     ctx.fillStyle = DEMODULATION_COLOR;
                     const discreteSignal = signal;
                     tSamples.forEach((t_sample, i) => {
+                        // NOTE: For demodulation, we need to use the discrete samples that were used to create the pulse train/steps
+                        const y_val = discreteSignal[i]; 
                         const x = translateX(t_sample);
-                        const y = translateY(discreteSignal[i]); 
+                        const y = translateY(y_val); 
                         ctx.beginPath();
                         ctx.arc(x, y, 3, 0, Math.PI * 2); 
                         ctx.fill();
@@ -536,13 +556,14 @@
             // Recalculate time vectors
             const NUM_POINTS_CONT = 500;
             const tContinuous = linspace(0, T_STOP, NUM_POINTS_CONT);
+            // Ensure tSamples is derived correctly from Fs
             const tSamples = linspace(0, T_STOP, Math.floor(FS_SAMPLES * T_STOP) + 1);
 
             // 1. Update Labels and Checks
             document.getElementById('amplitudeValue').textContent = A_ANALOG.toFixed(1);
             document.getElementById('freqAnalogValue').textContent = F_ANALOG.toFixed(1);
             document.getElementById('fsSamplesValue').textContent = FS_SAMPLES;
-            document.getElementById('numBitsValue').textContent = NUM_BITS;
+            // NUM_BITS display removed
 
             const nyquistWarning = document.getElementById('nyquistWarning');
             if (FS_SAMPLES <= 2 * F_ANALOG * 1.05) { 
@@ -568,9 +589,10 @@
             } else if (currentMode === 'PPM') {
                 result = simulatePPM(analogSamples, tSamples);
                 tMod = result.time;
-            } else if (currentMode === 'PCM') {
-                result = simulatePCM(analogSamples, tSamples);
+            } else { // Should not happen with new buttons, defaults to PAM logic if unknown
+                result = simulatePAM(analogSamples);
                 tMod = tSamples;
+                currentMode = 'PAM';
             }
             
             // 4. Run Demodulation (if enabled)
@@ -582,7 +604,7 @@
             // Update Output Graph Title
             let title = result.title;
             if (demodulationEnabled) {
-                title += " (Recovered Signal Shown)";
+                title = "Demodulation (Recovered Signal Only)"; // Title override when demode is ON
             }
             document.getElementById('outputGraphTitle').textContent = `Graph 2: ${title}`;
 
@@ -643,20 +665,14 @@
                     e.target.classList.remove('bg-white', 'text-indigo-700', 'border', 'border-indigo-300');
                     e.target.classList.add('bg-indigo-500', 'text-white', 'hover:bg-indigo-600');
                     
-                    // Toggle PCM Bits control visibility
-                    const pcmControl = document.getElementById('pcmBitsControl');
-                    if (newMode === 'PCM') {
-                        pcmControl.style.display = 'block';
-                    } else {
-                        pcmControl.style.display = 'none';
-                    }
+                    // PCM controls removed, so no toggle needed.
 
                     currentMode = newMode;
                     runSimulation();
                 });
             });
 
-            // Set initial PCM visibility
+            // Set initial PCM visibility (no longer needed, but retained the placeholder div)
             document.getElementById('pcmBitsControl').style.display = 'none'; 
 
             // 4. Demodulation Switch Listener
@@ -672,7 +688,7 @@
                 input.addEventListener('input', (e) => {
                     const value = parseFunc(e.target.value);
                     setter(value);
-                    document.getElementById(displayId).textContent = id === 'fsSamples' || id === 'numBits' ? value : value.toFixed(1);
+                    document.getElementById(displayId).textContent = id === 'fsSamples' ? value : value.toFixed(1);
                     runSimulation();
                 });
             };
@@ -680,7 +696,7 @@
             attachSliderListener('amplitude', (v) => A_ANALOG = v, 'amplitudeValue');
             attachSliderListener('freqAnalog', (v) => F_ANALOG = v, 'freqAnalogValue');
             attachSliderListener('fsSamples', (v) => FS_SAMPLES = v, 'fsSamplesValue', parseInt);
-            attachSliderListener('numBits', (v) => NUM_BITS = v, 'numBitsValue', parseInt);
+            // NUM_BITS listener removed
             
             document.getElementById('funcType').addEventListener('change', (e) => {
                 funcType = e.target.value;
